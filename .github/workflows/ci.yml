@@ -75,3 +75,44 @@ jobs:
           cd load-test
           k6 run tests/api-load.test.js
 
+  docker-compose-grafana:
+    name: Grafana + InfluxDB (docker-compose)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Start Grafana stack
+        run: |
+          cd grafana
+          docker compose up -d
+
+      - name: Wait for InfluxDB
+        run: |
+          INFLUX_URL="http://localhost:8087/query?q=show+databases&u=admin&p=admin"
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$INFLUX_URL" 2>/dev/null || echo 000)
+            if [ "$code" = "200" ]; then echo "InfluxDB is up"; break; fi
+            echo "Waiting for InfluxDB... ($i/30) (HTTP $code)"
+            sleep 2
+          done
+          curl -sf "$INFLUX_URL" -o /dev/null
+
+      - name: Wait for Grafana
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/api/health; then
+              echo "Grafana is up"
+              break
+            fi
+            echo "Waiting for Grafana... ($i/30)"
+            sleep 2
+          done
+          curl -sf http://localhost:3000/api/health
+
+      - name: Stop Grafana stack
+        if: always()
+        run: |
+          cd grafana
+          docker compose down -v
+
