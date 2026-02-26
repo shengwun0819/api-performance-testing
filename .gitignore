@@ -1,0 +1,26 @@
+# Config with local URLs (copy from example)
+load-test/config.json
+
+# Webpack build output (optional build)
+load-test/load_test/*.test.js
+load-test/load_test/*.test.js.map
+
+# Reports (optional: remove if you want to commit reports)
+# load-test/report/*.html
+
+# Node
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

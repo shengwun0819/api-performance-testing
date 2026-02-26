@@ -1,0 +1,7 @@
+{
+  "BASE_URL": "http://localhost:4000",
+  "K6_DURATION": "30s",
+  "K6_TIME_UNIT": "1s",
+  "K6_RATE": "10",
+  "K6_VUS": "20"
+}
