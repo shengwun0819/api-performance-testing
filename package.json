@@ -1,0 +1,12 @@
+{
+  "name": "k6-load-testing",
+  "version": "1.0.0",
+  "description": "k6 API load testing with Mock server, reports, and optional Grafana",
+  "private": true,
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}

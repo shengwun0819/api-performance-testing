@@ -1,0 +1,5 @@
+node_modules/
+load-test/node_modules/
+load-test/load_test/
+load-test/report/
+*.min.js
